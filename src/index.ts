@@ -15,6 +15,17 @@ const stratServer = async () => {
     const addressInfo = server.address() as AddressInfo;
     console.log(`\n Server ready at http://${addressInfo.address}:${addressInfo.port}`);
   });
+
+  // eslint-disable-next-line no-undef
+  const signalTraps: NodeJS.Signals[] = ['SIGTERM', 'SIGINT', 'SIGUSR2'];
+  signalTraps.forEach((type) => {
+    process.once(type, async () => {
+      console.log(`Microservice closing nicely after recognizing signal ${type}`);
+      server.close(() => {
+        console.log('Microservice closed');
+      });
+    });
+  });
 };
 
 stratServer();
