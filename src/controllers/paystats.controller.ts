@@ -1,12 +1,12 @@
 import * as express from 'express';
 import { inject } from 'inversify';
 import { interfaces, controller, httpGet, request, response } from 'inversify-express-utils';
-import TYPES from 'src/services/types';
+import ServicesTypes from 'src/services/types';
 import { PaystatsService } from '../services/paystats.service';
 
 @controller('/paystats')
 export class PaystatsController implements interfaces.Controller {
-  constructor (@inject(TYPES.PaystatsService) private paystatsService: PaystatsService) {
+  constructor (@inject(ServicesTypes.PaystatsService) private paystatsService: PaystatsService) {
 
   }
 

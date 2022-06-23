@@ -1,5 +1,5 @@
-const TYPES = {
+const ServicesTypes = {
   PaystatsService: Symbol('PaystatsService')
 };
 
-export default TYPES;
+export default ServicesTypes;
