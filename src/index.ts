@@ -5,6 +5,7 @@ import { InversifyExpressServer } from 'inversify-express-utils';
 import container from './config/inversify';
 import { EnvironmentVariables } from './config/environment';
 import './controllers/index';
+import { Pool } from 'pg';
 
 const stratServer = async () => {
   const app = createServer();
@@ -21,11 +22,23 @@ const stratServer = async () => {
   signalTraps.forEach((type) => {
     process.once(type, async () => {
       console.log(`Microservice closing nicely after recognizing signal ${type}`);
-      server.close(() => {
+      server.close(async () => {
+        console.log('   Closing any database connection leftover');
+        await databasePool.end();
+        console.log('   Closed database connections');
         console.log('Microservice closed');
       });
     });
   });
 };
+
+export const databasePool = new Pool({
+  user: 'postgres',
+  password: 'mypassword',
+  host: '0.0.0.0',
+  port: 5432,
+  database: 'carto',
+  ssl: false
+});
 
 stratServer();
