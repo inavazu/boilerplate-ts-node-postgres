@@ -1,4 +1,5 @@
 import { inject, injectable } from 'inversify';
+import { PostalCode } from 'src/model/postalCode.model';
 import { PaystatsRepository } from 'src/repositories/paystats.repository';
 import RepositoryTypes from 'src/repositories/types';
 
@@ -8,8 +9,9 @@ export class PaystatsService {
 
   }
 
-  public async getTotal () {
+  public async getTotal (): Promise<PostalCode[]> {
     console.log('Service -> getTotal()');
-    this.paystatsRepository.getTotal();
+    const postalCodes = await this.paystatsRepository.getTotal();
+    return postalCodes;
   }
 }
