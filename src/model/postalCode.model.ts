@@ -1,10 +1,10 @@
 export interface PostalCodeSchema {
     id: number;
     code: string;
-    theGeom: number[];
+    the_geom: number[];
 }
 
-export class PostalCode implements PostalCodeSchema {
+export class PostalCode {
   id: number;
   code: string;
   theGeom: number[];
@@ -12,6 +12,6 @@ export class PostalCode implements PostalCodeSchema {
   constructor (postalCodeSchema: PostalCodeSchema) {
     this.id = postalCodeSchema.id;
     this.code = postalCodeSchema.code;
-    this.theGeom = postalCodeSchema.theGeom;
+    this.theGeom = postalCodeSchema.the_geom;
   }
 }
