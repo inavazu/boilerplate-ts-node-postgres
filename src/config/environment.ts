@@ -1,5 +1,6 @@
 import dotenv from 'dotenv';
 
+// TODO: .env configration needs a refactor so it only loads dotenv lib when we are on testing mode so there is no need to copy the .env file
 export interface EnvironmentVariablesSchema {
     host: string;
     port: string;
