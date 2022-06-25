@@ -1,6 +1,6 @@
 import { injectable } from 'inversify';
-import { PostalCodePaystats, PostalCodePaystatsSchema } from 'src/model/postalCodePaystats.model';
-import { getDateFormatted } from 'src/utils/dates.utils';
+import { PostalCodePaystats, PostalCodePaystatsSchema } from '../model/postalCodePaystats.model';
+import { getDateFormatted } from '../utils/dates.utils';
 import { PostgresConnector } from './postgres';
 
 @injectable()

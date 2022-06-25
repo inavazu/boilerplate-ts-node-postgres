@@ -1,6 +1,6 @@
 import { injectable } from 'inversify';
-import { databasePool } from 'src';
-import { logError } from 'src/utils/error.utils';
+import { databasePool } from '../index';
+import { logError } from '../utils/error.utils';
 
 @injectable()
 export class PostgresConnector {

@@ -1,7 +1,7 @@
 import { inject, injectable } from 'inversify';
-import { PostalCodePaystats } from 'src/model/postalCodePaystats.model';
-import RepositoryTypes from 'src/repositories/types';
-import { ZipCodeRepository } from 'src/repositories/zipCode.repository';
+import { PostalCodePaystats } from '../model/postalCodePaystats.model';
+import RepositoryTypes from '../repositories/types';
+import { ZipCodeRepository } from '../repositories/zipCode.repository';
 
 @injectable()
 export class ZipCodeService {

@@ -1,7 +1,7 @@
 import { injectable } from 'inversify';
-import { Paystats, PaystatsSchema } from 'src/model/paystat.model';
-import { Sum, SumSchema } from 'src/model/sum.model';
-import { getDateFormatted } from 'src/utils/dates.utils';
+import { Paystats, PaystatsSchema } from '../model/paystat.model';
+import { Sum, SumSchema } from '../model/sum.model';
+import { getDateFormatted } from '../utils/dates.utils';
 import { PostgresConnector } from './postgres';
 
 @injectable()

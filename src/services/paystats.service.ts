@@ -1,7 +1,7 @@
 import { inject, injectable } from 'inversify';
-import { Paystats } from 'src/model/paystat.model';
-import { PaystatsRepository } from 'src/repositories/paystats.repository';
-import RepositoryTypes from 'src/repositories/types';
+import { Paystats } from '../model/paystat.model';
+import { PaystatsRepository } from '../repositories/paystats.repository';
+import RepositoryTypes from '../repositories/types';
 
 @injectable()
 export class PaystatsService {
