@@ -1,10 +1,10 @@
 import ServicesTypes from '../services/types';
 import { Container } from 'inversify';
 import { PaystatsService } from '../services/paystats.service';
-import { PaystatsRepository } from 'src/repositories/paystats.repository';
-import RepositoryTypes from 'src/repositories/types';
-import { ZipCodeRepository } from 'src/repositories/zipCode.repository';
-import { ZipCodeService } from 'src/services/zipCode.service';
+import { PaystatsRepository } from '../repositories/paystats.repository';
+import RepositoryTypes from '../repositories/types';
+import { ZipCodeRepository } from '../repositories/zipCode.repository';
+import { ZipCodeService } from '../services/zipCode.service';
 
 const container = new Container();
 

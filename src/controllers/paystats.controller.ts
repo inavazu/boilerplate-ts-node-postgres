@@ -1,8 +1,8 @@
 import * as express from 'express';
 import { inject } from 'inversify';
 import { interfaces, controller, httpGet, request, response, queryParam, requestParam } from 'inversify-express-utils';
-import ServicesTypes from 'src/services/types';
-import { assertStringDateFormatForMonth, assertZipCodeForMadrid } from 'src/utils/assert.utils';
+import ServicesTypes from '../services/types';
+import { assertStringDateFormatForMonth, assertZipCodeForMadrid } from '../utils/assert.utils';
 import { PaystatsService } from '../services/paystats.service';
 
 @controller('/paystats')

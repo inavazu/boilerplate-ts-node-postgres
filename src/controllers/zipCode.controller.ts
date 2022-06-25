@@ -1,9 +1,9 @@
 import * as express from 'express';
 import { inject } from 'inversify';
 import { interfaces, controller, httpGet, request, response, queryParam } from 'inversify-express-utils';
-import ServicesTypes from 'src/services/types';
-import { ZipCodeService } from 'src/services/zipCode.service';
-import { assertStringDateFormatForMonth } from 'src/utils/assert.utils';
+import ServicesTypes from '../services/types';
+import { ZipCodeService } from '../services/zipCode.service';
+import { assertStringDateFormatForMonth } from '../utils/assert.utils';
 
 @controller('/zip-code')
 export class ZipCodeController implements interfaces.Controller {
