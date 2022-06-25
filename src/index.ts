@@ -33,12 +33,12 @@ const stratServer = async () => {
 };
 
 export const databasePool = new Pool({
-  user: 'postgres',
-  password: 'mypassword',
-  host: '0.0.0.0',
-  port: 5432,
-  database: 'carto',
-  ssl: false
+  user: EnvironmentVariables.dbUser,
+  password: EnvironmentVariables.dbPassword,
+  host: EnvironmentVariables.dbHost,
+  port: EnvironmentVariables.dbPort,
+  database: EnvironmentVariables.dbDatabase,
+  ssl: EnvironmentVariables.dbSsl
 });
 
 stratServer();
