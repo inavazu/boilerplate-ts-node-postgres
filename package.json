@@ -4,9 +4,10 @@
   "description": "Carto test",
   "main": "index.js",
   "scripts": {
-    "test": "jest",
+    "build": "tsc --pretty",
     "dev": "nodemon",
-    "dev-build": "ts-node -r tsconfig-paths/register src/index"
+    "dev-build": "ts-node -r tsconfig-paths/register src/index",
+    "test": "jest"
   },
   "author": "Ivan Navarro",
   "license": "ISC",
