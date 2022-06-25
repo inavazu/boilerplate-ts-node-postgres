@@ -5,7 +5,7 @@
  * @param useDate Include the day of the month in the returned string. If not '01' is set. Default value is false
  * @returns String formatted based on the provided date
  */
-export const getDateFormatted = (date: Date, useMonth = true, useDate = true) => {
+export const getDateFormatted = (date: Date, useMonth = true, useDate = false) => {
   if (!date) {
     throw Error('Could not format date. Date must be provided!!');
   }

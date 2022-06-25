@@ -1,4 +1,4 @@
-export const getErrorMessage = (error: unknown) => {
+export const getErrorMessage = (error: unknown): string => {
   if (error instanceof Error) {
     return error.message;
   }
@@ -6,7 +6,7 @@ export const getErrorMessage = (error: unknown) => {
   return String(error);
 };
 
-export const getErrorStack = (error: unknown) => {
+export const getErrorStack = (error: unknown): string => {
   if (error instanceof Error) {
     return error.stack;
   }
@@ -20,10 +20,10 @@ export const getErrorStack = (error: unknown) => {
  * @param error Error to be logged
  * @param includeStack Decide whether to include the stack or not. Is included by default
  */
-export const logError = (msg: string, error: unknown, includeStack = true) => {
+export const logError = (msg: string, error: unknown, includeStack = true): void => {
   if (error instanceof Error) {
     console.error(`${msg}. ${getErrorMessage(error)}`, includeStack ? getErrorStack(error) : '');
+  } else {
+    console.error(`${msg}. ${String(error)}`);
   }
-
-  console.error(`${msg}. ${String(error)}`);
 };
