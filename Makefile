@@ -35,9 +35,9 @@ test:
 	@echo "Testing..."
 	@npm run test
 
-build:
+build_prod:
 	@echo "Building..."
-	@npm run build
+	@sh ./scripts/build_prod.sh
 
 pre_check: check_node_version
 	@npm run lint

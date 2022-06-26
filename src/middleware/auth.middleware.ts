@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from 'express';
-import { logError } from 'src/utils/error.utils';
+import { logError } from '../utils/error.utils';
 import { AuthError } from '../auth/auth.error';
 import { AuthService } from '../auth/auth.service';
 import { decodeToken, updateToken } from '../auth/auth.utils';

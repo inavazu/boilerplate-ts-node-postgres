@@ -8,7 +8,7 @@ RUN npm ci
 
 COPY . .
 
-RUN npm run build
+RUN make build_prod
 RUN npm prune --production
 
 FROM node:16.13.1-buster-slim as runtime
