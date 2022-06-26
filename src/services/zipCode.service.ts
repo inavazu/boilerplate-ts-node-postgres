@@ -1,5 +1,5 @@
 import { inject, injectable } from 'inversify';
-import { PostalCodePaystats } from '../model/postalCodePaystats.model';
+import { ZipCodeAccumulatedDTO } from '../dtos/zipCodesAccumulated.dto';
 import RepositoryTypes from '../repositories/types';
 import { ZipCodeRepository } from '../repositories/zipCode.repository';
 
@@ -9,8 +9,9 @@ export class ZipCodeService {
 
   }
 
-  public async getAllWithPaystatsAmountInDateRange (start: Date, end: Date): Promise<PostalCodePaystats[]> {
-    const total = await this.zipCodeRepository.getAllWithPaystatsAmountInDateRange(start, end);
-    return total;
+  public async getAllWithPaystatsAmountInDateRange (start: Date, end: Date): Promise<ZipCodeAccumulatedDTO[]> {
+    const data = await this.zipCodeRepository.getAllWithPaystatsAmountInDateRange(start, end);
+    const zipCodeAccumulatedDTO: ZipCodeAccumulatedDTO[] = ZipCodeAccumulatedDTO.convertFromPostalCodePaystatsArray(data);
+    return zipCodeAccumulatedDTO;
   }
 }

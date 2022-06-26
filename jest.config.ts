@@ -28,7 +28,8 @@ export default {
   roots: [rootDirector],
   // setupFilesAfterEnv: [`${rootDirector}/__tests__/setup.ts`],
   testPathIgnorePatterns: [
-    '/node_modules/',
+    './node_modules/',
+    './mocks',
     '<rootDir>/build',
     `${rootDirector}/__tests__/fixtures`,
     `${rootDirector}/__tests__/setup.ts`

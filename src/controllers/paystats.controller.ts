@@ -20,9 +20,11 @@ export class PaystatsController implements interfaces.Controller {
     console.log('req', req);
     assertStringDateFormatForMonth(start);
     assertStringDateFormatForMonth(end);
+
     const startDate = new Date(start);
     const endDate = new Date(end);
     const total = await this.paystatsService.getTotalByDateRange(startDate, endDate);
+
     res.status(200).json(total);
   }
 
@@ -33,9 +35,11 @@ export class PaystatsController implements interfaces.Controller {
     @queryParam('endMonth') end: string) {
     assertStringDateFormatForMonth(start);
     assertStringDateFormatForMonth(end);
+
     const startDate = new Date(start);
     const endDate = new Date(end);
     const data = await this.paystatsService.getAccumulatedByGenderAndAgeInDateRange(startDate, endDate);
+
     res.status(200).json(data);
   }
 
@@ -46,9 +50,11 @@ export class PaystatsController implements interfaces.Controller {
     @queryParam('endMonth') end: string) {
     assertStringDateFormatForMonth(start);
     assertStringDateFormatForMonth(end);
+
     const startDate = new Date(start);
     const endDate = new Date(end);
     const data = await this.paystatsService.getAccumulatedByGenderAgeAndMonthInDateRange(startDate, endDate);
+
     res.status(200).json(data);
   }
 
@@ -61,9 +67,11 @@ export class PaystatsController implements interfaces.Controller {
     assertZipCodeForMadrid(zipCode);
     assertStringDateFormatForMonth(start);
     assertStringDateFormatForMonth(end);
+
     const startDate = new Date(start);
     const endDate = new Date(end);
     const data = await this.paystatsService.getDetailInDateRange(zipCode, startDate, endDate);
+
     res.status(200).json(data);
   }
 }

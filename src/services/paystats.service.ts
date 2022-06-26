@@ -1,5 +1,7 @@
 import { inject, injectable } from 'inversify';
-import { Paystats } from '../model/paystat.model';
+import { AccumulatedAgeGenderDTO } from '../dtos/accumulatedAgeGender.dto';
+import { AccumulatedAgeGenderMonthDTO } from '../dtos/accumulatedAgeGenderMonth.dto';
+import { TotalAccumulatedDTO } from '../dtos/totalAccumulated.dto';
 import { PaystatsRepository } from '../repositories/paystats.repository';
 import RepositoryTypes from '../repositories/types';
 
@@ -9,23 +11,27 @@ export class PaystatsService {
 
   }
 
-  public async getTotalByDateRange (start: Date, end: Date): Promise<number> {
+  public async getTotalByDateRange (start: Date, end: Date): Promise<TotalAccumulatedDTO> {
     const total = await this.paystatsRepository.getTotalInDateRange(start, end);
-    return total;
+    const totalAccumulatedDTO: TotalAccumulatedDTO = new TotalAccumulatedDTO(total);
+    return totalAccumulatedDTO;
   }
 
-  public async getAccumulatedByGenderAndAgeInDateRange (start: Date, end: Date): Promise<Paystats[]> {
+  public async getAccumulatedByGenderAndAgeInDateRange (start: Date, end: Date): Promise<AccumulatedAgeGenderDTO[]> {
     const data = await this.paystatsRepository.getAccumulatedByGenderAndAgeInDateRange(start, end);
-    return data;
+    const accumulatedAgeGenderDTO: AccumulatedAgeGenderDTO[] = AccumulatedAgeGenderDTO.convertFromPaystatsArray(data);
+    return accumulatedAgeGenderDTO;
   }
 
-  public async getAccumulatedByGenderAgeAndMonthInDateRange (start: Date, end: Date): Promise<Paystats[]> {
+  public async getAccumulatedByGenderAgeAndMonthInDateRange (start: Date, end: Date): Promise<AccumulatedAgeGenderMonthDTO[]> {
     const data = await this.paystatsRepository.getAccumulatedByGenderAgeAndMonthInDateRange(start, end);
-    return data;
+    const accumulatedAgeGenderMonthDTO: AccumulatedAgeGenderMonthDTO[] = AccumulatedAgeGenderMonthDTO.convertFromPaystatsArray(data);
+    return accumulatedAgeGenderMonthDTO;
   }
 
-  public async getDetailInDateRange (zipCode: number, start: Date, end: Date): Promise<Paystats[]> {
+  public async getDetailInDateRange (zipCode: number, start: Date, end: Date): Promise<AccumulatedAgeGenderDTO[]> {
     const data = await this.paystatsRepository.getDetailInDateRange(zipCode, start, end);
-    return data;
+    const accumulatedAgeGenderDTO: AccumulatedAgeGenderDTO[] = AccumulatedAgeGenderDTO.convertFromPaystatsArray(data);
+    return accumulatedAgeGenderDTO;
   }
 }

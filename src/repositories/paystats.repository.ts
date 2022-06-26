@@ -6,26 +6,23 @@ import { PostgresConnector } from './postgres';
 
 @injectable()
 export class PaystatsRepository extends PostgresConnector {
-  public async getTotalInDateRange (start: Date, end: Date): Promise<number> {
+  public async getTotalInDateRange (start: Date, end: Date): Promise<Sum> {
     const startFormatted = getDateFormatted(start);
     const endFormatted = getDateFormatted(end);
     const query = `select sum(amount) from paystats where p_month >= '${startFormatted}' and p_month <= '${endFormatted}'`;
 
     const result = await this.runQuery<Sum, SumSchema>(Sum, query);
-    const resultAsNumber = Number(result[0].getValue());
 
-    if (isNaN(resultAsNumber)) {
-      return 0;
-    }
-
-    return resultAsNumber;
+    return result[0];
   }
 
   public async getAccumulatedByGenderAndAgeInDateRange (start: Date, end: Date): Promise<Paystats[]> {
     const startFormatted = getDateFormatted(start);
     const endFormatted = getDateFormatted(end);
     const query = `select sum(amount), p_age, p_gender from paystats where p_month >= '${startFormatted}' and p_month <= '${endFormatted}' group by p_age, p_gender`;
+
     const result = await this.runQuery<Paystats, PaystatsSchema>(Paystats, query);
+
     return result;
   }
 
@@ -33,7 +30,9 @@ export class PaystatsRepository extends PostgresConnector {
     const startFormatted = getDateFormatted(start);
     const endFormatted = getDateFormatted(end);
     const query = `select sum(amount), p_age, p_gender, p_month from paystats where p_month >= '${startFormatted}' and p_month <= '${endFormatted}' group by p_age, p_gender, p_month`;
+
     const result = await this.runQuery<Paystats, PaystatsSchema>(Paystats, query);
+
     return result;
   }
 
@@ -41,7 +40,9 @@ export class PaystatsRepository extends PostgresConnector {
     const startFormatted = getDateFormatted(start);
     const endFormatted = getDateFormatted(end);
     const query = `select sum(p.amount), p.p_age, p.p_gender from postal_codes pc left join paystats p on pc.id = p.postal_code_id where pc.code = ${zipCode} and p.p_month >= '${startFormatted}' and p.p_month <= '${endFormatted}' group by p.p_age, p.p_gender order by p.p_age, p.p_gender`;
+
     const result = await this.runQuery<Paystats, PaystatsSchema>(Paystats, query);
+
     return result;
   }
 }

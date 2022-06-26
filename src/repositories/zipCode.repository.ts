@@ -11,6 +11,7 @@ export class ZipCodeRepository extends PostgresConnector {
     const query = `select pc.id, sum(p.amount), pc.the_geom from postal_codes pc left join paystats p on pc.id = p.postal_code_id where p.p_month >= '${startFormatted}' and p.p_month <= '${endFormatted}' group by pc.id`;
 
     const result = await this.runQuery<PostalCodePaystats, PostalCodePaystatsSchema>(PostalCodePaystats, query);
+
     return result;
   }
 }
