@@ -6,7 +6,7 @@ import { corsOptionsDelegate } from '../middleware/corsHandler';
 import { authMiddleware } from '../middleware/auth.middleware';
 import ServicesTypes from '../services/types';
 import { ZipCodeService } from '../services/zipCode.service';
-import { assertStringDateFormatForMonth } from '../utils/assert.utils';
+import { assertDateRangeInStringDateFormatForMonth } from '../utils/assert.utils';
 
 @controller('/zip-code', ...[cors(corsOptionsDelegate), authMiddleware])
 export class ZipCodeController implements interfaces.Controller {
@@ -21,8 +21,7 @@ export class ZipCodeController implements interfaces.Controller {
     @queryParam('startMonth') start: string,
     @queryParam('endMonth') end: string) {
     console.log('req', req);
-    assertStringDateFormatForMonth(start);
-    assertStringDateFormatForMonth(end);
+    assertDateRangeInStringDateFormatForMonth(start, end);
     const startDate = new Date(start);
     const endDate = new Date(end);
     const total = await this.zipCodeService.getAllWithPaystatsAmountInDateRange(startDate, endDate);
