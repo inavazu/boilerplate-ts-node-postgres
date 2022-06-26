@@ -7,6 +7,7 @@ export interface EnvironmentVariablesSchema {
     dbPort: number,
     dbDatabase: string,
     dbSsl: boolean
+    sessionTokenSecret: string;
 }
 
 const isTestEnv = () => {
@@ -41,5 +42,6 @@ export const EnvironmentVariables: EnvironmentVariablesSchema = {
   dbHost: process.env.DB_HOST || '0.0.0.0',
   dbPort: Number(process.env.DB_PORT) || 5432,
   dbDatabase: process.env.DB_DATABASE || 'carto2',
-  dbSsl: Boolean(Number(process.env.DB_SSL)) || false
+  dbSsl: Boolean(Number(process.env.DB_SSL)) || false,
+  sessionTokenSecret: process.env.SESSION_TOKEN_SECRET || 'cartoSecret'
 };

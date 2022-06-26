@@ -15,8 +15,6 @@ const createServer = (): express.Application => {
     res.send('OK');
   });
 
-  // app.use('/', locationRouter);
-
   app.use(errorHandler);
 
   return app;

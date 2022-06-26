@@ -1,11 +1,12 @@
 import * as express from 'express';
 import { inject } from 'inversify';
-import { interfaces, controller, httpGet, request, response, queryParam, requestParam } from 'inversify-express-utils';
+import { interfaces, controller, httpGet, response, queryParam, requestParam } from 'inversify-express-utils';
 import ServicesTypes from '../services/types';
 import { assertStringDateFormatForMonth, assertZipCodeForMadrid } from '../utils/assert.utils';
 import { PaystatsService } from '../services/paystats.service';
+import { authMiddleware } from '../middleware/auth.middleware';
 
-@controller('/paystats')
+@controller('/paystats', ...[authMiddleware])
 export class PaystatsController implements interfaces.Controller {
   constructor (@inject(ServicesTypes.PaystatsService) private paystatsService: PaystatsService) {
 
@@ -13,11 +14,9 @@ export class PaystatsController implements interfaces.Controller {
 
   @httpGet('/total')
   public async getTotalByDateRange (
-    @request() req: express.Request,
     @response() res: express.Response,
     @queryParam('startMonth') start: string,
     @queryParam('endMonth') end: string) {
-    console.log('req', req);
     assertStringDateFormatForMonth(start);
     assertStringDateFormatForMonth(end);
 
