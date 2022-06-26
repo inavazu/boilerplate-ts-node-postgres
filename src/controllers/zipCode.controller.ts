@@ -1,12 +1,14 @@
+import cors from 'cors';
 import * as express from 'express';
 import { inject } from 'inversify';
 import { interfaces, controller, httpGet, request, response, queryParam } from 'inversify-express-utils';
+import { corsOptionsDelegate } from '../middleware/corsHandler';
 import { authMiddleware } from '../middleware/auth.middleware';
 import ServicesTypes from '../services/types';
 import { ZipCodeService } from '../services/zipCode.service';
 import { assertStringDateFormatForMonth } from '../utils/assert.utils';
 
-@controller('/zip-code', ...[authMiddleware])
+@controller('/zip-code', ...[cors(corsOptionsDelegate), authMiddleware])
 export class ZipCodeController implements interfaces.Controller {
   constructor (@inject(ServicesTypes.ZipCodeService) private zipCodeService: ZipCodeService) {
 

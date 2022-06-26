@@ -5,8 +5,10 @@ import ServicesTypes from '../services/types';
 import { assertStringDateFormatForMonth, assertZipCodeForMadrid } from '../utils/assert.utils';
 import { PaystatsService } from '../services/paystats.service';
 import { authMiddleware } from '../middleware/auth.middleware';
+import cors from 'cors';
+import { corsOptionsDelegate } from '../middleware/corsHandler';
 
-@controller('/paystats', ...[authMiddleware])
+@controller('/paystats', ...[cors(corsOptionsDelegate), authMiddleware])
 export class PaystatsController implements interfaces.Controller {
   constructor (@inject(ServicesTypes.PaystatsService) private paystatsService: PaystatsService) {
 
