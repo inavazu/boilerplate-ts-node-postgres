@@ -4,11 +4,9 @@ import { interfaces, controller, httpGet, response, queryParam, requestParam } f
 import ServicesTypes from '../services/types';
 import { assertDateRangeInStringDateFormatForMonth, assertZipCodeForMadrid } from '../utils/assert.utils';
 import { PaystatsService } from '../services/paystats.service';
-import { authMiddleware } from '../middleware/auth.middleware';
-import cors from 'cors';
-import { corsOptionsDelegate } from '../middleware/corsHandler';
+import { privateWithCors } from '../middleware/controller.middleware';
 
-@controller('/paystats', ...[cors(corsOptionsDelegate), authMiddleware])
+@controller('/paystats', ...privateWithCors)
 export class PaystatsController implements interfaces.Controller {
   constructor (@inject(ServicesTypes.PaystatsService) private paystatsService: PaystatsService) {
 
