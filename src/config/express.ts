@@ -1,5 +1,4 @@
 import express from 'express';
-import errorHandler from '../middleware/errorHandler';
 
 const createServer = (): express.Application => {
   const app = express();
@@ -12,8 +11,6 @@ const createServer = (): express.Application => {
   app.get('/status', (_req, res) => {
     res.send('OK');
   });
-
-  app.use(errorHandler);
 
   return app;
 };

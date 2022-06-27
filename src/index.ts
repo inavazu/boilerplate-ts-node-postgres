@@ -4,14 +4,19 @@ import { AddressInfo } from 'net';
 import { InversifyExpressServer } from 'inversify-express-utils';
 import container from './config/inversify';
 import { EnvironmentVariables } from './config/environment';
-import './controllers/index';
 import { Pool } from 'pg';
+import errorHandler from './middleware/errorHandler';
+import './controllers/index';
 
 const stratServer = async () => {
   const app = createServer();
   const host = EnvironmentVariables.host;
   const port = EnvironmentVariables.port;
-  const appConfigured = new InversifyExpressServer(container, null, { rootPath: '/api' }, app).build();
+  const appInversify = new InversifyExpressServer(container, null, { rootPath: '/api' }, app);
+  appInversify.setErrorConfig((app) => {
+    app.use(errorHandler);
+  });
+  const appConfigured = appInversify.build();
   const server = appConfigured.listen({ host, port }, () => {
     const addressInfo = server.address() as AddressInfo;
     console.log(`\n Server ready at http://${addressInfo.address}:${addressInfo.port}`);

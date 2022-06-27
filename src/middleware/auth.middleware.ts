@@ -13,7 +13,7 @@ export const authMiddleware = async (req: Request, res: Response, next: NextFunc
   if (!userCredentials) {
     const authError = new AuthError();
     logError(`Rejected access to ${req.path} as no credentials are provided`, authError);
-    throw authError;
+    return next(authError);
   }
 
   const userAuth = decodeToken(userCredentials);
@@ -23,13 +23,13 @@ export const authMiddleware = async (req: Request, res: Response, next: NextFunc
   if (!user.isActive) {
     const authError = new AuthError();
     logError(`Inactive user ${user.userName} - ${user.userId} trying to access to ${req.method} ${req.path}`, authError);
-    throw authError;
+    return next(authError);
   }
 
   if (!await authService.checkUserPermissions(user.userId, req.method, req.path)) {
     const authError = new AuthError();
     logError(`User ${user.userName} - ${user.userId} has NO permissions for doing a ${req.method} ${req.path}`, authError);
-    throw authError;
+    return next(authError);
   }
 
   res.setHeader(authHeaderField, updateToken(userAuth, sessionTokenExpiration));
