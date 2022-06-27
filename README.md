@@ -1,5 +1,30 @@
 # Paystats API Rest for CARTO - [Description](https://gist.github.com/ajaest/164cbf99777cc33463b20e3e2fce9313#file-data-zip)
 Git project is included
+
+## API Rest definition
+
+Based on the provided [wireframe](https://gist.githubusercontent.com/ajaest/164cbf99777cc33463b20e3e2fce9313/raw/wireframe.png) the following endpoints are implemented:
+- Aggregated total turnover amount per zip code area in order to support the map layer. It returns for each zip code with turnover: the zip code, the total aggregated and the WKB to draw it. The selected color in which it would be painted shall be decided at front level, as we are passing the total aggregate value.
+```sh
+curl -H "Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJsYXN0QWNjZXNzIjoiMjAyMi0wNi0yNlQxNjozNjozOS42MTNaIiwidXNlcklkIjoicjQzcjQiLCJ1c2VyTmFtZSI6Ikl2YW5jaHVjayBhY3RpdmUiLCJpYXQiOjE2NTYyNjEzOTl9.A-GwgSwhYQdrKMqAJJjvhEv_cUptvVpaegjMpWsECuk" -v 'http://0.0.0.0:5001/api/zip-code/paystats-amount?startMonth=2014-01&endMonth=2015-02'
+```
+- Getting the total amount based on the date range (top left corner). It will only return the total amount.
+```sh
+curl -H "Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJsYXN0QWNjZXNzIjoiMjAyMi0wNi0yNlQxNjozNjozOS42MTNaIiwidXNlcklkIjoicjQzcjQiLCJ1c2VyTmFtZSI6Ikl2YW5jaHVjayBhY3RpdmUiLCJpYXQiOjE2NTYyNjEzOTl9.A-GwgSwhYQdrKMqAJJjvhEv_cUptvVpaegjMpWsECuk" -v 'http://0.0.0.0:5001/api/paystats/total?startMonth=2015-01&endMonth=2015-02'
+```
+- First plot showing data on age and gender. Based on the data range provided the following data is provided: total amount, age range and gender
+```sh
+curl -H "Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJsYXN0QWNjZXNzIjoiMjAyMi0wNi0yNlQxNjozNjozOS42MTNaIiwidXNlcklkIjoicjQzcjQiLCJ1c2VyTmFtZSI6Ikl2YW5jaHVjayBhY3RpdmUiLCJpYXQiOjE2NTYyNjEzOTl9.A-GwgSwhYQdrKMqAJJjvhEv_cUptvVpaegjMpWsECuk" -v 'http://0.0.0.0:5001/api/paystats/accumulated/age-gender?startMonth=2015-01&endMonth=2015-02'
+```
+- Second plot showing data on age, gender and month. Based on the data range provided the following data is provided: total amount, age range, gender and month
+```sh
+curl -H "Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJsYXN0QWNjZXNzIjoiMjAyMi0wNi0yNlQxNjozNjozOS42MTNaIiwidXNlcklkIjoicjQzcjQiLCJ1c2VyTmFtZSI6Ikl2YW5jaHVjayBhY3RpdmUiLCJpYXQiOjE2NTYyNjEzOTl9.A-GwgSwhYQdrKMqAJJjvhEv_cUptvVpaegjMpWsECuk" -v 'http://0.0.0.0:5001/api/paystats/accumulated/age-gender-month?startMonth=2015-01&endMonth=2015-02'
+```
+- Paystats detail of a specific zip code, clicked on the map, for the selected range. This endpoint shall be used when the user clicks on a zip code area inside the map. Firstly it was implemented using the id of the postal_code entity in DB, as it is already included in the paystats table, but in order to make it more useable it was change by providing the zip code. The following data is provided: total amount, age range and gender
+```sh
+curl -H "Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJsYXN0QWNjZXNzIjoiMjAyMi0wNi0yNlQxNjozNjozOS42MTNaIiwidXNlcklkIjoicjQzcjQiLCJ1c2VyTmFtZSI6Ikl2YW5jaHVjayBhY3RpdmUiLCJpYXQiOjE2NTYyNjEzOTl9.A-GwgSwhYQdrKMqAJJjvhEv_cUptvVpaegjMpWsECuk" -v 'http://0.0.0.0:5001/api/paystats/zip-code/28222?startMonth=2015-01&endMonth=2015-02'
+```
+
 ## Tech stack
 - NodeJs - Express
 - Inversify: Dependencies injection
@@ -66,4 +91,3 @@ Beside of this layers related to satisfying the requests received from the clien
     - Was not sure if it could be suitable, but considred a second authentication mechanism based on an API Key + origin domain. Similar to how Google does it. It would be complementary to the current user authentication. If the __authorization__ header filed content starts with "Bearer" it would mean this option is the autehntication method to be taken into account.
 -Documentation:
     - Documentation for the API Rest, adding some lib that generates and serves the documentation in swagger style. Would give a first try to [swagger-jsdoc](https://www.npmjs.com/package/swagger-jsdoc) and [swagger-ui-express](https://www.npmjs.com/package/swagger-ui-express)
-    
