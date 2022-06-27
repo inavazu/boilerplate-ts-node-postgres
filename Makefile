@@ -1,5 +1,4 @@
 .DEFAULT_GOAL := check
-.PHONY:docs migrations
 
 init: check_node_version
 	@echo "Initialising the project"
@@ -11,17 +10,17 @@ start:
 
 db_start:
 	@echo "Starting local DB as a docker container..."
-	@sh ./scripts/db_start.sh
+	@bash ./scripts/db_start.sh
 
 db_stop:
 	@echo "Stopping local DB as a docker container..."
-	@sh ./scripts/db_stop.sh
+	@bash ./scripts/db_stop.sh
 
 check: pre_check build test
 	@echo "✅"
 
 check_node_version: 
-	@sh ./scripts/check_node_version.sh
+	@bash ./scripts/check_node_version.sh
 
 clean:
 	@echo "Cleaning..."
@@ -37,20 +36,21 @@ test:
 
 build_prod:
 	@echo "Building..."
-	@sh ./scripts/build_prod.sh
+	@bash ./scripts/build_prod.sh
 
 pre_check: check_node_version
 	@npm run lint
+	@npm run build
 
-build_container_image:
+build_container_image: check
 	@echo "Building docker image paystats-back..."
 	@docker build -t paystats-back .
 	@docker image ls paystats-back
 
 back_start:
 	@echo "Starting paystats-back docker container..."
-	@sh ./scripts/back_start.sh
+	@bash ./scripts/back_start.sh
 
 back_stop:
 	@echo "Stopping paystats-back docker container..."
-	@sh ./scripts/back_stop.sh
+	@bash ./scripts/back_stop.sh

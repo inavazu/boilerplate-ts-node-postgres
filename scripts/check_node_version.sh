@@ -1,3 +1,4 @@
+#!/bin/bash
 function readJson {  
   UNAMESTR=`uname`
   if [[ "$UNAMESTR" == 'Linux' ]]; then
@@ -16,7 +17,7 @@ function readJson {
   fi; 
 }
 
-versionFromJson=`readJson ../package.json node` || exit 1;
+versionFromJson=`readJson ./package.json node` || exit 1;
 version="${versionFromJson:1}"
 echo "Package.json version $version"
 
