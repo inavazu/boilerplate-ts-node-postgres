@@ -1,26 +1,24 @@
-# Paystats API Rest for CARTO - [Description](https://gist.github.com/ajaest/164cbf99777cc33463b20e3e2fce9313#file-data-zip)
-Git project is included
-
+# Boilerplate Typescript - Express - Postgres - Docker
 ## API Rest definition
 
-Based on the provided [wireframe](https://gist.githubusercontent.com/ajaest/164cbf99777cc33463b20e3e2fce9313/raw/wireframe.png) the following endpoints are implemented:
+Description of the API Rest endpoints
 - Aggregated total turnover amount per zip code area in order to support the map layer. It returns for each zip code with turnover: the zip code, the total aggregated and the WKB to draw it. The selected color in which it would be painted shall be decided at front level, as we are passing the total aggregate value.
 ```sh
 curl -H "Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJsYXN0QWNjZXNzIjoiMjAyMi0wNi0yNlQxNjozNjozOS42MTNaIiwidXNlcklkIjoicjQzcjQiLCJ1c2VyTmFtZSI6Ikl2YW5jaHVjayBhY3RpdmUiLCJpYXQiOjE2NTYyNjEzOTl9.A-GwgSwhYQdrKMqAJJjvhEv_cUptvVpaegjMpWsECuk" -v 'http://0.0.0.0:5001/api/zip-code/paystats-amount?startMonth=2014-01&endMonth=2015-02'
 ```
-- Getting the total amount based on the date range (top left corner). It will only return the total amount.
+- Getting the total amount based on the date range. It will only return the total amount.
 ```sh
 curl -H "Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJsYXN0QWNjZXNzIjoiMjAyMi0wNi0yNlQxNjozNjozOS42MTNaIiwidXNlcklkIjoicjQzcjQiLCJ1c2VyTmFtZSI6Ikl2YW5jaHVjayBhY3RpdmUiLCJpYXQiOjE2NTYyNjEzOTl9.A-GwgSwhYQdrKMqAJJjvhEv_cUptvVpaegjMpWsECuk" -v 'http://0.0.0.0:5001/api/paystats/total?startMonth=2015-01&endMonth=2015-02'
 ```
-- First plot showing data on age and gender. Based on the data range provided the following data is provided: total amount, age range and gender
+- Data grouped by age and gender. Based on the data range provided the following data is provided: total amount, age range and gender
 ```sh
 curl -H "Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJsYXN0QWNjZXNzIjoiMjAyMi0wNi0yNlQxNjozNjozOS42MTNaIiwidXNlcklkIjoicjQzcjQiLCJ1c2VyTmFtZSI6Ikl2YW5jaHVjayBhY3RpdmUiLCJpYXQiOjE2NTYyNjEzOTl9.A-GwgSwhYQdrKMqAJJjvhEv_cUptvVpaegjMpWsECuk" -v 'http://0.0.0.0:5001/api/paystats/accumulated/age-gender?startMonth=2015-01&endMonth=2015-02'
 ```
-- Second plot showing data on age, gender and month. Based on the data range provided the following data is provided: total amount, age range, gender and month
+- Data grouped by age, gender and month. Based on the data range provided the following data is provided: total amount, age range, gender and month
 ```sh
 curl -H "Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJsYXN0QWNjZXNzIjoiMjAyMi0wNi0yNlQxNjozNjozOS42MTNaIiwidXNlcklkIjoicjQzcjQiLCJ1c2VyTmFtZSI6Ikl2YW5jaHVjayBhY3RpdmUiLCJpYXQiOjE2NTYyNjEzOTl9.A-GwgSwhYQdrKMqAJJjvhEv_cUptvVpaegjMpWsECuk" -v 'http://0.0.0.0:5001/api/paystats/accumulated/age-gender-month?startMonth=2015-01&endMonth=2015-02'
 ```
-- Paystats detail of a specific zip code, clicked on the map, for the selected range. This endpoint shall be used when the user clicks on a zip code area inside the map. Firstly it was implemented using the id of the postal_code entity in DB, as it is already included in the paystats table, but in order to make it more useable it was change by providing the zip code. The following data is provided: total amount, age range and gender
+- Paystats detail of a specific zip code for the selected range. The following data is provided: total amount, age range and gender
 ```sh
 curl -H "Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJsYXN0QWNjZXNzIjoiMjAyMi0wNi0yNlQxNjozNjozOS42MTNaIiwidXNlcklkIjoicjQzcjQiLCJ1c2VyTmFtZSI6Ikl2YW5jaHVjayBhY3RpdmUiLCJpYXQiOjE2NTYyNjEzOTl9.A-GwgSwhYQdrKMqAJJjvhEv_cUptvVpaegjMpWsECuk" -v 'http://0.0.0.0:5001/api/paystats/zip-code/28222?startMonth=2015-01&endMonth=2015-02'
 ```
@@ -62,7 +60,6 @@ Beside of this layers related to satisfying the requests received from the clien
 
 ### Models
 - A model composes of an interface and a class. The interface is named with the suffix _Schema_, and represents the data with the column names in the DB. The class is the model managed by the BE. The class has a constructor expecting its corresponding _schema interface_
-- Provided file **postal_codes.csv** has 2 types of line breaks, windows and unix. Had to run dos2unix to be able to run it with /copy
 
 ### Repositories
 - All repositories extend from PostgresClient, responsable for converting the structure obtained from the DB to the model class.
@@ -73,12 +70,12 @@ Beside of this layers related to satisfying the requests received from the clien
 - Middleware is included at controllers level, because for example the status endpoint is public. Also, login methods will also be public until token is generated for first time and sent to the client.
 - No login methods are implemented, but to perfomr tests there is a npm script _tokenGen_ that generates a token with no expiracy
 - Updated token between transactions is a jwt token with expiracy time and it is included in the **authorization** header field. It is evaluated for every transaction, updated (to avoid expiracy) and included back in the response at the same header field
-- In the middleware, beside verifying the token, user permissions are resolve and decide wether he is capable of performing the request or not (Mocked)
+- In the middleware, beside verifying the token, user permissions are resolve and decide whether the user is capable of performing the request or not (Mocked)
 
 ### Tests
-- Not enough tests. I had ran out of time and decided to leave out tests for controllers and repositories mainly because specific environment should be prepared. Also some auth method should be included.
+- Not enough tests 😞. Need to include more.
 
-### Left overs due to missing time
+### Pendig to implement
 - Tests: As mentioned in previuos section.
 - Logging:
     - Currently using console.log/error

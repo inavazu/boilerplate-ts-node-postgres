@@ -8,7 +8,7 @@ import { Pool } from 'pg';
 import errorHandler from './middleware/errorHandler';
 import './controllers/index';
 
-const stratServer = async () => {
+const startServer = async () => {
   const app = createServer();
   const host = EnvironmentVariables.host;
   const port = EnvironmentVariables.port;
@@ -46,4 +46,4 @@ export const databasePool = new Pool({
   ssl: EnvironmentVariables.dbSsl
 });
 
-stratServer();
+startServer();
