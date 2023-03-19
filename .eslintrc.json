@@ -1,0 +1,22 @@
+{
+    "env": {
+        "browser": true,
+        "es2021": "Description of the rule.",
+        "jest": true
+    },
+    "extends": [
+        "standard"
+    ],
+    "parser": "@typescript-eslint/parser",
+    "parserOptions": {
+        "ecmaVersion": "latest",
+        "sourceType": "module"
+    },
+    "plugins": [
+        "@typescript-eslint"
+    ],
+    "rules": {
+        "semi": [2, "always"],
+        "no-useless-constructor": 0
+    }
+}
